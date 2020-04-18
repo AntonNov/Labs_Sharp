@@ -12,6 +12,7 @@ namespace Lab_1
 
         public int countOfComputer = 0;
 
+        public int height = 9;
         public void Draw(string temp = "??")
         {
 
@@ -23,7 +24,7 @@ namespace Lab_1
 
             Console.SetCursorPosition(Console.WindowWidth / 2 - 5, ++i);
 
-            Console.WriteLine("#  1st   #");
+            Console.WriteLine("#   You  #");
 
             Console.SetCursorPosition(Console.WindowWidth / 2 - 5, ++i);
 
@@ -89,6 +90,8 @@ namespace Lab_1
 
             const int MAXCOUNTFOR2ND = 17;
 
+            int counterOfStrings = 0; 
+
             Console.Title = "Игра 21";
 
             Console.SetWindowSize(50, 30);
@@ -116,7 +119,11 @@ namespace Lab_1
 
                 CardIdentifier(scoreboard.countOfFirstPlayer);
 
+                counterOfStrings = Console.CursorTop-scoreboard.height;
+
                 scoreboard.Draw();
+
+                Console.CursorTop += counterOfStrings;
 
                 Console.WriteLine("->Берём дальше? (↑/Escape)");
 
@@ -146,11 +153,19 @@ namespace Lab_1
 
                         scoreboard.countOfFirstPlayer += newСardForFirstPlayer;
 
+                        counterOfStrings = Console.CursorTop - scoreboard.height;
+
                         scoreboard.Draw();
+
+                        Console.CursorTop += counterOfStrings;
 
                         if (scoreboard.countOfFirstPlayer > MAXCOUNT)
                         {
+                            counterOfStrings = Console.CursorTop - scoreboard.height;
+
                             scoreboard.Draw(Convert.ToString(scoreboard.countOfComputer));
+
+                            Console.CursorTop += counterOfStrings;
 
                             Console.WriteLine("->Вы перебрали! Компьютер победил");
 
@@ -200,7 +215,13 @@ namespace Lab_1
                     {
                         Console.WriteLine("->Компьютер перебрал! Вы победили!");
 
+                        counterOfStrings = Console.CursorTop - scoreboard.height;
+
+                        Console.CursorTop += counterOfStrings;
+
                         scoreboard.Draw(Convert.ToString(scoreboard.countOfComputer));
+
+                        Console.CursorTop += counterOfStrings;
 
                         ConsoleKey temp = FinalInput();
 
