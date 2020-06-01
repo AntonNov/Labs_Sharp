@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,91 +6,15 @@ using System.Threading.Tasks;
 
 namespace Lab_1
 {
-    class Scoreboard
-    {
-        public int countOfFirstPlayer = 0;
-
-        public int countOfComputer = 0;
-
-        public int height = 9;
-        public void Draw(string temp = "??")
-        {
-
-            int i = 0;
-
-            Console.SetCursorPosition(Console.WindowWidth / 2 - 5, i);
-
-            Console.WriteLine("##########");
-
-            Console.SetCursorPosition(Console.WindowWidth / 2 - 5, ++i);
-
-            Console.WriteLine("#   You  #");
-
-            Console.SetCursorPosition(Console.WindowWidth / 2 - 5, ++i);
-
-            if (countOfFirstPlayer < 10)
-            {
-                Console.WriteLine($"#   {countOfFirstPlayer}    #");
-            }
-            else
-            {
-                Console.WriteLine($"#   {countOfFirstPlayer}   #");
-            }
-            Console.SetCursorPosition(Console.WindowWidth / 2 - 5, ++i);
-
-
-            if (i == 3)
-            {
-                Console.WriteLine("#        #");
-
-                Console.SetCursorPosition(Console.WindowWidth / 2 - 5, ++i);
-            }
-
-            Console.WriteLine("----------");
-
-            Console.SetCursorPosition(Console.WindowWidth / 2 - 5, ++i);
-
-            Console.WriteLine("#   pc   #");
-
-            Console.SetCursorPosition(Console.WindowWidth / 2 - 5, ++i);
-
-            Console.WriteLine($"#   {temp}   #");
-
-            Console.SetCursorPosition(Console.WindowWidth / 2 - 5, ++i);
-
-            Console.WriteLine("#        #");
-
-            Console.SetCursorPosition(Console.WindowWidth / 2 - 5, ++i);
-
-            Console.WriteLine("##########");
-
-        }
-    }
-
-    struct CursorPosion
-    {
-        public int cursorX;
-
-        public int cursorY;
-
-        public CursorPosion(int cursorX, int cursorY)
-        {
-            this.cursorX = cursorX;
-
-            this.cursorY = cursorY;
-        }
-    } 
-    
     class Program
     {      
         static void Main(string[] args)
         {
-            
             const int MAXCOUNT = 21;
 
             const int MAXCOUNTFOR2ND = 17;
 
-            int counterOfStrings = 0; 
+            int counterOfStrings; 
 
             Console.Title = "Игра 21";
 
@@ -119,7 +43,7 @@ namespace Lab_1
 
                 CardIdentifier(scoreboard.countOfFirstPlayer);
 
-                counterOfStrings = Console.CursorTop-scoreboard.height;
+                counterOfStrings = Console.CursorTop-Scoreboard.height;
 
                 scoreboard.Draw();
 
@@ -129,14 +53,12 @@ namespace Lab_1
 
                 ConsoleKeyInfo answer = RightInput();
 
-                int newСardForFirstPlayer;
-
-                int newСardForComputer; 
+                int newСardForFirstPlayer, newСardForComputer; 
 
                 bool isUsing = false;
 
                 while ((answer.Key != ConsoleKey.Escape || scoreboard.countOfComputer < MAXCOUNTFOR2ND) &&
-                    (answer.Key == ConsoleKey.UpArrow || scoreboard.countOfComputer < MAXCOUNTFOR2ND))
+                            (answer.Key == ConsoleKey.UpArrow || scoreboard.countOfComputer < MAXCOUNTFOR2ND))
                 {
                     if (isUsing)
                     {
@@ -153,7 +75,7 @@ namespace Lab_1
 
                         scoreboard.countOfFirstPlayer += newСardForFirstPlayer;
 
-                        counterOfStrings = Console.CursorTop - scoreboard.height;
+                        counterOfStrings = Console.CursorTop - Scoreboard.height;
 
                         scoreboard.Draw();
 
@@ -161,7 +83,7 @@ namespace Lab_1
 
                         if (scoreboard.countOfFirstPlayer > MAXCOUNT)
                         {
-                            counterOfStrings = Console.CursorTop - scoreboard.height;
+                            counterOfStrings = Console.CursorTop - Scoreboard.height;
 
                             scoreboard.Draw(Convert.ToString(scoreboard.countOfComputer));
 
@@ -198,26 +120,23 @@ namespace Lab_1
 
                             answer = RightInput();
 
-
                         }
-                    }
-
-                    if (scoreboard.countOfComputer >= MAXCOUNTFOR2ND)
-                    {
-                        continue;
                     }
 
                     newСardForComputer = RightCard(); ;
 
                     scoreboard.countOfComputer += newСardForComputer;
 
+                    if (scoreboard.countOfComputer >= MAXCOUNTFOR2ND)
+                    {
+                        continue;
+                    }
+
                     if (scoreboard.countOfComputer > MAXCOUNT)
                     {
                         Console.WriteLine("->Компьютер перебрал! Вы победили!");
 
-                        counterOfStrings = Console.CursorTop - scoreboard.height;
-
-                        Console.CursorTop += counterOfStrings;
+                        counterOfStrings = Console.CursorTop - Scoreboard.height;
 
                         scoreboard.Draw(Convert.ToString(scoreboard.countOfComputer));
 
@@ -228,7 +147,7 @@ namespace Lab_1
                         if (temp == ConsoleKey.End)
                         {
 
-                            Console.WriteLine("\t\t\t\t->Спасибо за игру!");
+                            Console.WriteLine("->Спасибо за игру!");
 
                             return;
                         }
@@ -250,13 +169,19 @@ namespace Lab_1
 
                 Console.WriteLine("->Счёт компьютера " + scoreboard.countOfComputer);
 
+                counterOfStrings = Console.CursorTop - Scoreboard.height;
+
+                scoreboard.Draw(Convert.ToString(scoreboard.countOfComputer));
+
+                Console.CursorTop += counterOfStrings;
+
                 if (scoreboard.countOfFirstPlayer > scoreboard.countOfComputer)
                 {
                     Console.WriteLine("->Ваша победа!!");
                 }
                 else if (scoreboard.countOfFirstPlayer < scoreboard.countOfComputer)
                 {
-                    Console.WriteLine("->проигрыш!!");
+                    Console.WriteLine("->Проигрыш!!");
                 }
                 else
                 {
